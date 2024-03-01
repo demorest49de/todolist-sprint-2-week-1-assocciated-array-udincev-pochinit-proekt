@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {FilterValuesType} from './App';
+import {FilterValuesType, fvenum, TodoListEntryType} from './App';
 
 export type TaskType = {
     id: string
@@ -12,10 +12,10 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     removeTask: (todolistId: string, taskId: string) => void
-    changeFilter: (todolistId: string,value: FilterValuesType) => void
+    changeFilter: (todolistId: string, value: FilterValuesType) => void
     addTask: (title: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
-    filter: FilterValuesType
+    todolist: TodoListEntryType
 }
 
 export function Todolist(
@@ -24,22 +24,25 @@ export function Todolist(
         title,
         tasks,
         removeTask,
-        filter,
         changeFilter,
         addTask,
-        changeTaskStatus
+        changeTaskStatus,
+        todolist
     }: PropsType) {
 
-    let tasksForTodolist = tasks;
-    console.log(' tasks: ', tasks);
+    function FilterTasks() {
 
-    // if (tasksForTodolist[todolistId].filter === "active") {
-    //     tasksForTodolist = tasks.filter(t => t.isDone === false);
-    // }
-    // if (tasksForTodolist.filter === "completed") {
-    //     tasksForTodolist = tasks.filter(t => t.isDone === true);
-    // }
+        let tasksForTodolist = tasks;
 
+        if (todolist.filter === fvenum.active) {
+            tasksForTodolist = tasks.filter(t => t.isDone === false);
+        }
+        if (todolist.filter === fvenum.completed) {
+            tasksForTodolist = tasks.filter(t => t.isDone === true);
+        }
+    }
+
+    console.log(' tasks todolist: ', tasks, todolist);
 
     let [currentTitle, setCurrentTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
@@ -64,9 +67,9 @@ export function Todolist(
         }
     }
 
-    const onAllClickHandler = () => changeFilter(todolistId,"all");
-    const onActiveClickHandler = () => changeFilter(todolistId,"active");
-    const onCompletedClickHandler = () => changeFilter(todolistId,"completed");
+    const onAllClickHandler = () => changeFilter(todolistId, "all");
+    const onActiveClickHandler = () => changeFilter(todolistId, "active");
+    const onCompletedClickHandler = () => changeFilter(todolistId, "completed");
 
 
     return <div>
@@ -100,11 +103,14 @@ export function Todolist(
         </ul>
         <div>
             <button className={filter === 'all' ? "active-filter" : ""}
-                    onClick={onAllClickHandler}>All</button>
+                    onClick={onAllClickHandler}>All
+            </button>
             <button className={filter === 'active' ? "active-filter" : ""}
-                    onClick={onActiveClickHandler}>Active</button>
+                    onClick={onActiveClickHandler}>Active
+            </button>
             <button className={filter === 'completed' ? "active-filter" : ""}
-                    onClick={onCompletedClickHandler}>Completed</button>
+                    onClick={onCompletedClickHandler}>Completed
+            </button>
         </div>
     </div>
 }
