@@ -30,10 +30,9 @@ export function Todolist(
         todolist
     }: PropsType) {
 
-    function filterTasks() {
+    let tasksForTodolist = tasks;
 
-        let tasksForTodolist = tasks;
-        console.log(' todolist: ', todolist);
+    function filterTasks() {
         if (todolist.filter === fvenum.active) {
             tasksForTodolist = tasks.filter(t => t.isDone === false);
         }
@@ -87,7 +86,7 @@ export function Todolist(
         </div>
         <ul>
             {
-                tasks.map(t => {
+                tasksForTodolist.map(t => {
                     const onClickHandler = () => removeTask(todolistId, t.id)
                     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                         changeTaskStatus(t.id, e.currentTarget.checked);

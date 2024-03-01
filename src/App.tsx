@@ -35,7 +35,7 @@ function App() {
         [todolistID1]: {id: todolistID1, title: 'What to learn', filter: fvenum.all},
         [todolistID2]: {id: todolistID2, title: 'What to buy', filter: fvenum.all},
     })
-
+    console.log(' todolists: ', todolists);
 //tasks
     let [tasks, setTasks] = useState<TasksType>({
         [todolistID1]: [
@@ -53,7 +53,7 @@ function App() {
             {id: v1(), title: "GraphQL2", isDone: false},
         ]
     });
-    console.log(' tasks: ', tasks);
+
 
 //func
     function removeTask(todolistId: string, id: string) {
@@ -76,10 +76,7 @@ function App() {
     }
 
     function changeFilter(todolistId: string, value: FilterValuesType) {
-        //  const result=[...todolists,todolists.map(el=>el.id===todolistId ? {...el,el.filter=value}  :el)]
-        //                                                                {id: v1(), title: 'What to buy', filter:value},
-        // setTodolists(todolists.map(el => el.id === todolistId ? {...el, filter: value, title: 'What to learn'} : el))
-
+        setTodolists({...todolists,  [todolistId]: {...todolists[todolistId], filter: value}})
     }
 
     return (
