@@ -30,10 +30,10 @@ export function Todolist(
         todolist
     }: PropsType) {
 
-    function FilterTasks() {
+    function filterTasks() {
 
         let tasksForTodolist = tasks;
-
+        console.log(' todolist: ', todolist);
         if (todolist.filter === fvenum.active) {
             tasksForTodolist = tasks.filter(t => t.isDone === false);
         }
@@ -41,6 +41,8 @@ export function Todolist(
             tasksForTodolist = tasks.filter(t => t.isDone === true);
         }
     }
+
+    filterTasks();
 
     console.log(' tasks todolist: ', tasks, todolist);
 
@@ -67,9 +69,9 @@ export function Todolist(
         }
     }
 
-    const onAllClickHandler = () => changeFilter(todolistId, "all");
-    const onActiveClickHandler = () => changeFilter(todolistId, "active");
-    const onCompletedClickHandler = () => changeFilter(todolistId, "completed");
+    const onAllClickHandler = () => changeFilter(todolistId, fvenum.all);
+    const onActiveClickHandler = () => changeFilter(todolistId, fvenum.active);
+    const onCompletedClickHandler = () => changeFilter(todolistId, fvenum.completed);
 
 
     return <div>
@@ -102,13 +104,13 @@ export function Todolist(
             }
         </ul>
         <div>
-            <button className={filter === 'all' ? "active-filter" : ""}
+            <button className={todolist.filter === 'all' ? "active-filter" : ""}
                     onClick={onAllClickHandler}>All
             </button>
-            <button className={filter === 'active' ? "active-filter" : ""}
+            <button className={todolist.filter === 'active' ? "active-filter" : ""}
                     onClick={onActiveClickHandler}>Active
             </button>
-            <button className={filter === 'completed' ? "active-filter" : ""}
+            <button className={todolist.filter === 'completed' ? "active-filter" : ""}
                     onClick={onCompletedClickHandler}>Completed
             </button>
         </div>

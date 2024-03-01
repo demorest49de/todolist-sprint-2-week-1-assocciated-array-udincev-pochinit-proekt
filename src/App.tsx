@@ -33,7 +33,7 @@ function App() {
 //todo
     let [todolists, setTodolists] = useState<TodolistsType>({
         [todolistID1]: {id: todolistID1, title: 'What to learn', filter: fvenum.all},
-        [todolistID1]: {id: todolistID2, title: 'What to buy', filter: fvenum.all},
+        [todolistID2]: {id: todolistID2, title: 'What to buy', filter: fvenum.all},
     })
 
 //tasks
@@ -85,7 +85,6 @@ function App() {
     return (
         <div className="App">
             {Object.values(todolists).map(el => {
-
                 return (
                     <Todolist
                         key={el.id}
