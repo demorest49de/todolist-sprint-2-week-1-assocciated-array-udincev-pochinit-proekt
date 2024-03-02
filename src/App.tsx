@@ -35,7 +35,7 @@ function App() {
         [todolistID1]: {id: todolistID1, title: 'What to learn', filter: fvenum.all},
         [todolistID2]: {id: todolistID2, title: 'What to buy', filter: fvenum.all},
     })
-    console.log(' todolists: ', todolists);
+
 //tasks
     let [tasks, setTasks] = useState<TasksType>({
         [todolistID1]: [
@@ -54,29 +54,25 @@ function App() {
         ]
     });
 
+    console.log(' tasks: ', tasks);
 
 //func
     function removeTask(todolistId: string, id: string) {
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== id)})
     }
 
-    function addTask(title: string) {
-        // let task = {id: v1(), title: title, isDone: false};
-        // let newTasks = {task, ...tasks};
-        // setTasks(newTasks);
+    function addTask(title: string, todolistId: string) {
+        setTasks({
+            ...tasks, [todolistId]: [{id: v1(), title: title, isDone: false}, ...tasks[todolistId]]
+        });
     }
 
-    function changeStatus(taskId: string, isDone: boolean) {
-        // let task = tasks.find(t => t.id === taskId);
-        // if (task) {
-        //     task.isDone = isDone;
-        // }
-        //
-        // setTasks({...tasks});
+    function changeStatus(todolistId: string, taskId: string, isDone: boolean) {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone: isDone} : t)})
     }
 
     function changeFilter(todolistId: string, value: FilterValuesType) {
-        setTodolists({...todolists,  [todolistId]: {...todolists[todolistId], filter: value}})
+        setTodolists({...todolists, [todolistId]: {...todolists[todolistId], filter: value}})
     }
 
     return (
