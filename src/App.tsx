@@ -55,8 +55,6 @@ function App() {
         ]
     });
 
-    console.log(' tasks: ', tasks);
-
 //func
     function removeTask(todolistId: string, id: string) {
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== id)})
@@ -76,11 +74,8 @@ function App() {
         setTodolists({...todolists, [todolistId]: {...todolists[todolistId], filter: value}})
     }
 
-    console.log(' Object.values(todolists): ', Object.values(todolists));
-
     function removeTodolist (todolistId: string){
         delete todolists[todolistId]
-        console.log(' todolists: ', todolists);
         setTodolists({...todolists})
     }
 
