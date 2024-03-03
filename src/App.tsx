@@ -17,24 +17,22 @@ export type TodoListEntryType = {
     filter: FilterValuesType
 }
 
-export type TodolistsType = {
-    [key: string]: TodoListEntryType
-}
-
 export type TasksType = {
     [key: string]: Array<TaskType>
 }
-
 
 function App() {
 //id
     let todolistID1 = v1();
     let todolistID2 = v1();
+
 //todo
-    let [todolists, setTodolists] = useState<TodolistsType>({
-        [todolistID1]: {id: todolistID1, title: 'What to learn', filter: fvenum.all},
-        [todolistID2]: {id: todolistID2, title: 'What to buy', filter: fvenum.all},
-    })
+    let [todolists, setTodolists]
+        = useState<Array<TodoListEntryType>>([
+        {id: todolistID1, title: 'What to learn', filter: fvenum.all},
+        {id: todolistID2, title: 'What to buy', filter: fvenum.all},
+    ])
+    console.log(' todolists: ', todolists);
 
 //tasks
     let [tasks, setTasks] = useState<TasksType>({
@@ -71,18 +69,20 @@ function App() {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone: isDone} : t)})
     }
 
-    function changeFilter(todolistId: string, value: FilterValuesType) {
-        setTodolists({...todolists, [todolistId]: {...todolists[todolistId], filter: value}})
+    function changeFilter(index: number, value: FilterValuesType) {
+        const t = [...todolists,  {...todolists[+index], filter: value}];
+        console.log(t);
+        setTodolists([...todolists,  {...todolists[+index], filter: value}])
     }
-    console.log(' Object.values(todolists): ', Object.values(todolists));
-    function removeTodolist (todolistId: string){
 
+    function removeTodolist (todolistId: string){
+        // delete todolists
         // setTodolists({...todolists.})
     }
 
     return (
         <div className="App">
-            {Object.values(todolists).map(el => {
+            {todolists.map((el, index) => {
                 return (
                     <Todolist
                         key={el.id}
@@ -93,7 +93,8 @@ function App() {
                         changeFilter={changeFilter}
                         addTask={addTask}
                         changeTaskStatus={changeStatus}
-                        todolist={todolists[el.id]}
+                        todolist={todolists[index]}
+                        index={index}
                     />
                 )
             })}

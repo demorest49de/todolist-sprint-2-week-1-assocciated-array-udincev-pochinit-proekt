@@ -13,10 +13,11 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     removeTask: (todolistId: string, taskId: string) => void
-    changeFilter: (todolistId: string, value: FilterValuesType) => void
+    changeFilter: (index: number, value: FilterValuesType) => void
     addTask: (title: string, todolistId: string) => void
     changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
     todolist: TodoListEntryType
+    index: number
 }
 
 export function Todolist(
@@ -28,11 +29,11 @@ export function Todolist(
         changeFilter,
         addTask,
         changeTaskStatus,
-        todolist
+        todolist,
+        index,
     }: PropsType) {
 
     let tasksForTodolist = tasks;
-
     function filterTasks() {
         if (todolist.filter === fvenum.active) {
             tasksForTodolist = tasks.filter(t => t.isDone === false);
@@ -68,9 +69,9 @@ export function Todolist(
         }
     }
 
-    const onAllClickHandler = () => changeFilter(todolistId, fvenum.all);
-    const onActiveClickHandler = () => changeFilter(todolistId, fvenum.active);
-    const onCompletedClickHandler = () => changeFilter(todolistId, fvenum.completed);
+    const onAllClickHandler = () => changeFilter(index, fvenum.all);
+    const onActiveClickHandler = () => changeFilter(index, fvenum.active);
+    const onCompletedClickHandler = () => changeFilter(index, fvenum.completed);
 
 
     return <div>
