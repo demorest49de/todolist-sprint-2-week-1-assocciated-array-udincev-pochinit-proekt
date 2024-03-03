@@ -30,6 +30,7 @@ function App() {
 //id
     let todolistID1 = v1();
     let todolistID2 = v1();
+
 //todo
     let [todolists, setTodolists] = useState<TodolistsType>({
         [todolistID1]: {id: todolistID1, title: 'What to learn', filter: fvenum.all},

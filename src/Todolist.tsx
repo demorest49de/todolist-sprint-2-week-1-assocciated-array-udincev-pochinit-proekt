@@ -44,7 +44,6 @@ export function Todolist(
 
     filterTasks();
 
-
     let [currentTitle, setCurrentTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
