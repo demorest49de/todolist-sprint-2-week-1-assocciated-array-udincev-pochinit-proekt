@@ -75,9 +75,11 @@ function App() {
     function changeFilter(todolistId: string, value: FilterValuesType) {
         setTodolists({...todolists, [todolistId]: {...todolists[todolistId], filter: value}})
     }
+
     console.log(' Object.values(todolists): ', Object.values(todolists));
     function removeTodolist (todolistId: string){
-
+        const t = Object.values(todolists)
+        console.log(' t: ', t);
         setTodolists({...todolists})
     }
 
@@ -95,6 +97,7 @@ function App() {
                         addTask={addTask}
                         changeTaskStatus={changeStatus}
                         todolist={todolists[el.id]}
+                        removeTodolist={removeTodolist}
                     />
                 )
             })}

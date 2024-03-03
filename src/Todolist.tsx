@@ -17,6 +17,7 @@ type PropsType = {
     addTask: (title: string, todolistId: string) => void
     changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
     todolist: TodoListEntryType
+    removeTodolist: (todolistId: string) => void
 }
 
 export function Todolist(
@@ -28,7 +29,8 @@ export function Todolist(
         changeFilter,
         addTask,
         changeTaskStatus,
-        todolist
+        todolist,
+        removeTodolist
     }: PropsType) {
 
     let tasksForTodolist = tasks;
@@ -70,12 +72,12 @@ export function Todolist(
     const onAllClickHandler = () => changeFilter(todolistId, fvenum.all);
     const onActiveClickHandler = () => changeFilter(todolistId, fvenum.active);
     const onCompletedClickHandler = () => changeFilter(todolistId, fvenum.completed);
-
+    const removeTodoHandler = () => removeTodolist(todolistId)
 
     return <div>
         <div className={s[`todolist__title-block`]}>
             <h3>{title}</h3>
-            <button >X</button>
+            <button onClick={removeTodoHandler}>X</button>
         </div>
         <div>
             <input value={currentTitle}
