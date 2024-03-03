@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType, fvenum, TodoListEntryType} from './App';
+import s from './Todolist.module.css'
 
 export type TaskType = {
     id: string
@@ -14,7 +15,7 @@ type PropsType = {
     removeTask: (todolistId: string, taskId: string) => void
     changeFilter: (todolistId: string, value: FilterValuesType) => void
     addTask: (title: string, todolistId: string) => void
-    changeTaskStatus: (todolistId:string, taskId: string, isDone: boolean) => void
+    changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
     todolist: TodoListEntryType
 }
 
@@ -73,7 +74,10 @@ export function Todolist(
 
 
     return <div>
-        <h3>{title}</h3>
+        <div className={s[`todolist__title-block`]}>
+            <h3>{title}</h3>
+            <button >X</button>
+        </div>
         <div>
             <input value={currentTitle}
                    onChange={onChangeHandler}
