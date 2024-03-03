@@ -77,9 +77,10 @@ function App() {
     }
 
     console.log(' Object.values(todolists): ', Object.values(todolists));
+
     function removeTodolist (todolistId: string){
-        const t = Object.values(todolists)
-        console.log(' t: ', t);
+        delete todolists[todolistId]
+        console.log(' todolists: ', todolists);
         setTodolists({...todolists})
     }
 
