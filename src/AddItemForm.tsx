@@ -13,6 +13,7 @@ const AddItemForm = ({
         = useState<string | null>(null)
 
     const addItemHandler = () => {
+        debugger
         if (title.trim() !== '') {
             addItem(title);
             setTitle('')

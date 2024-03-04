@@ -55,7 +55,7 @@ function App() {
             {id: v1(), title: "GraphQL2", isDone: false},
         ]
     });
-
+    console.log(' todolists: ', todolists);
 //func
     function removeTask(todolistId: string, id: string) {
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== id)})
@@ -83,7 +83,7 @@ function App() {
     function addTodolist(title: string) {
         const newTodoId = v1()
         let newTodoList: TodoListEntryType = {id: newTodoId, title: title, filter: fvenum.all}
-        setTodolists({newTodoList, ...todolists})
+        setTodolists({[newTodoId]: newTodoList, ...todolists})
         setTasks({
             ...tasks,
             [newTodoId]: []
