@@ -1,6 +1,8 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType, fvenum, TodoListEntryType} from './App';
 import s from './Todolist.module.css'
+import AddItemForm from "./AddItemForm";
+import addItemForm from "./AddItemForm";
 
 export type TaskType = {
     id: string
@@ -49,6 +51,12 @@ export function Todolist(
     let [currentTitle, setCurrentTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
+    //funcs
+    const addItem = (title: string) => {
+        addTask(title, todolistId)
+    }
+
+    //handlers
     const addTaskHandler = () => {
         if (currentTitle.trim() !== "") {
             addTask(currentTitle.trim(), todolistId);
@@ -58,16 +66,16 @@ export function Todolist(
         }
     }
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setCurrentTitle(e.currentTarget.value)
-    }
-
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
-        if (e.key === 'Enter') {
-            addTaskHandler();
-        }
-    }
+    // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    //     setCurrentTitle(e.currentTarget.value)
+    // }
+    //
+    // const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    //     setError(null);
+    //     if (e.key === 'Enter') {
+    //         addTaskHandler();
+    //     }
+    // }
 
     const onAllClickHandler = () => changeFilter(todolistId, fvenum.all);
     const onActiveClickHandler = () => changeFilter(todolistId, fvenum.active);
@@ -79,15 +87,16 @@ export function Todolist(
             <h3>{title}</h3>
             <button onClick={removeTodoHandler}>X</button>
         </div>
-        <div>
-            <input value={currentTitle}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   className={error ? "error" : ""}
-            />
-            <button onClick={addTaskHandler}>+</button>
-            {error && <div className="error-message">{error}</div>}
-        </div>
+        <AddItemForm addItem={addItem}/>
+        {/*<div>*/}
+        {/*    <input value={currentTitle}*/}
+        {/*           onChange={onChangeHandler}*/}
+        {/*           onKeyPress={onKeyPressHandler}*/}
+        {/*           className={error ? "error" : ""}*/}
+        {/*    />*/}
+        {/*    <button onClick={addTaskHandler}>+</button>*/}
+        {/*    {error && <div className="error-message">{error}</div>}*/}
+        {/*</div>*/}
         <ul>
             {
                 tasksForTodolist.map(t => {

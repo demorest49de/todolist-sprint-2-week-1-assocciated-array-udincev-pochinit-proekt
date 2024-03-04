@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
+import AddItemForm from "./AddItemForm";
 
 export enum fvenum {
     all = 'all',
@@ -74,13 +75,24 @@ function App() {
         setTodolists({...todolists, [todolistId]: {...todolists[todolistId], filter: value}})
     }
 
-    function removeTodolist (todolistId: string){
+    function removeTodolist(todolistId: string) {
         delete todolists[todolistId]
         setTodolists({...todolists})
     }
 
+    function addTodolist(title: string) {
+        const newTodoId = v1()
+        let newTodoList: TodoListEntryType = {id: newTodoId, title: title, filter: fvenum.all}
+        setTodolists({newTodoList, ...todolists})
+        setTasks({
+            ...tasks,
+            [newTodoId]: []
+        })
+    }
+
     return (
         <div className="App">
+            <AddItemForm addItem={addTodolist}/>
             {Object.values(todolists).map(el => {
                 return (
                     <Todolist
