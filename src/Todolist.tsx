@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType, fvenum, TodoListEntryType} from './App';
 import s from './Todolist.module.css'
 import AddItemForm from "./AddItemForm";
-import addItemForm from "./AddItemForm";
+import {EditableSpan} from "./EditableSpan";
 
 export type TaskType = {
     id: string
@@ -106,13 +106,18 @@ export function Todolist(
                         changeTaskStatus(todolistId, t.id, e.currentTarget.checked);
                     }
 
-                    return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                        <input type="checkbox"
-                               onChange={onChangeHandler}
-                               checked={t.isDone}/>
-                        <span>{t.title}</span>
-                        <button onClick={onClickHandler}>x</button>
-                    </li>
+                    return <EditableSpan
+                        task={t}
+                        onClickHandler={onClickHandler}
+                        onChangeHandler={onChangeHandler}
+                    />
+                    // <li key={t.id} className={t.isDone ? "is-done" : ""}>
+                    //     <input type="checkbox"
+                    //            onChange={onChangeHandler}
+                    //            checked={t.isDone}/>
+                    //     <span>{t.title}</span>
+                    //     <button onClick={onClickHandler}>x</button>
+                    // </li>
                 })
             }
         </ul>
