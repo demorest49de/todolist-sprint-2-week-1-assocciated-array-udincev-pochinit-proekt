@@ -51,12 +51,17 @@ export function Todolist(
     let [currentTitle, setCurrentTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
-    //funcs
+    //functionality
     const addItem = (title: string) => {
         addTask(title, todolistId)
     }
 
+    function saveTitle(title: string) {
+        setCurrentTitle(title)
+    }
+
     //handlers
+
     const addTaskHandler = () => {
         if (currentTitle.trim() !== "") {
             addTask(currentTitle.trim(), todolistId);
@@ -65,17 +70,6 @@ export function Todolist(
             setError("Title is required");
         }
     }
-
-    // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    //     setCurrentTitle(e.currentTarget.value)
-    // }
-    //
-    // const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    //     setError(null);
-    //     if (e.key === 'Enter') {
-    //         addTaskHandler();
-    //     }
-    // }
 
     const onAllClickHandler = () => changeFilter(todolistId, fvenum.all);
     const onActiveClickHandler = () => changeFilter(todolistId, fvenum.active);
@@ -88,15 +82,6 @@ export function Todolist(
             <button onClick={removeTodoHandler}>X</button>
         </div>
         <AddItemForm addItem={addItem}/>
-        {/*<div>*/}
-        {/*    <input value={currentTitle}*/}
-        {/*           onChange={onChangeHandler}*/}
-        {/*           onKeyPress={onKeyPressHandler}*/}
-        {/*           className={error ? "error" : ""}*/}
-        {/*    />*/}
-        {/*    <button onClick={addTaskHandler}>+</button>*/}
-        {/*    {error && <div className="error-message">{error}</div>}*/}
-        {/*</div>*/}
         <ul>
             {
                 tasksForTodolist.map(t => {
@@ -106,18 +91,13 @@ export function Todolist(
                         changeTaskStatus(todolistId, t.id, e.currentTarget.checked);
                     }
 
-                    return <EditableSpan
-                        task={t}
-                        onClickHandler={onClickHandler}
-                        onChangeHandler={onChangeHandler}
-                    />
-                    // <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                    //     <input type="checkbox"
-                    //            onChange={onChangeHandler}
-                    //            checked={t.isDone}/>
-                    //     <span>{t.title}</span>
-                    //     <button onClick={onClickHandler}>x</button>
-                    // </li>
+                    return <li key={t.id} className={t.isDone ? "is-done" : ""}>
+                        <input type="checkbox"
+                               onChange={onChangeHandler}
+                               checked={t.isDone}/>
+                        <EditableSpan saveTitle={saveTitle} taskTitle={t.title}/>
+                        <button onClick={onClickHandler}>x</button>
+                    </li>
                 })
             }
         </ul>
