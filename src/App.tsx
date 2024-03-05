@@ -33,11 +33,10 @@ function App() {
     let todolistID2 = v1();
 
 
-    let [todolists, setTodolists] = useState<TodolistsType>({
-        //TODO zamenit id na v1()
-        [todolistID1]: {id: todolistID1, title: 'What to learn', filter: fvenum.all},
-        [todolistID2]: {id: todolistID2, title: 'What to buy', filter: fvenum.all},
-    })
+    let [todolists, setTodolists] = useState<Array<TodoListEntryType>>([
+        {id: todolistID1, title: 'What to learn', filter: fvenum.all},
+        {id: todolistID2, title: 'What to buy', filter: fvenum.all},
+    ])
     console.log(' todolists: ', todolists);
 //tasks
     let [tasks, setTasks] = useState<TasksType>({
@@ -77,12 +76,11 @@ function App() {
     }
 
     function changeFilter(todolistId: string, value: FilterValuesType) {
-        setTodolists({...todolists, [todolistId]: {...todolists[todolistId], filter: value}})
+        setTodolists(todolists.map(todo => todo.id === todolistId ? {...todo, filter: value} : todo))
     }
 
     function removeTodolist(todolistId: string) {
-        delete todolists[todolistId]
-        setTodolists({...todolists})
+        setTodolists(todolists.filter(todo => todo.id !== todolistId))
     }
 
     function addTodolistItem(title: string) {
