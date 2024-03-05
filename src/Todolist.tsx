@@ -51,16 +51,12 @@ export function Todolist(
     filterTasks();
 
     let [currentTitle, setCurrentTitle] = useState("")
-    let [error, setError] = useState<string | null>(null)
 
     //functionality
-    const addItem = (title: string) => {
-        debugger
+    const addTaskItemHandler = (title: string) => {
             if (title.trim() !== "") {
                 addTask(title.trim(), todolistId);
                 setCurrentTitle("");
-            } else {
-                setError("Title is required");
             }
     }
 
@@ -69,15 +65,6 @@ export function Todolist(
     }
 
     //handlers
-
-    // const addTaskHandler = () => {
-    //     if (currentTitle.trim() !== "") {
-    //         addTask(currentTitle.trim(), todolistId);
-    //         setCurrentTitle("");
-    //     } else {
-    //         setError("Title is required");
-    //     }
-    // }
 
     const onAllClickHandler = () => changeFilter(todolistId, fvenum.all);
     const onActiveClickHandler = () => changeFilter(todolistId, fvenum.active);
@@ -89,7 +76,7 @@ export function Todolist(
             <EditableSpan saveText={saveH3Title} title={title} isH3Title={true}/>
             <button onClick={removeTodoHandler}>X</button>
         </div>
-        <AddItemForm addItem={addItem}/>
+        <AddItemForm addItem={addTaskItemHandler}/>
         <ul>
             {
                 tasksForTodolist.map(t => {
