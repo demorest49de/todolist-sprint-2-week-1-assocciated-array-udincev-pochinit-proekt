@@ -1,29 +1,27 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useState} from 'react';
 
-type EditableSpanType = {
-    title: string
-    saveText: (title: string) => void
-    isH3Title?: boolean
+type EditableSpanPropsType = {
+    value: string
+    onChange: (newValue: string) => void
 }
 
-export const EditableSpan = ({
-                                 title,
-                                 saveText,
-                                 isH3Title,
-                             }: EditableSpanType) => {
-    const [editMode, setEditMode] = useState<Boolean>(true)
-    const [currTitle, setCurrTitle] = useState<string>(title)
+export function EditableSpan(props: EditableSpanPropsType) {
+    let [editMode, setEditMode] = useState(false);
+    let [title, setTitle] = useState(props.value);
+
     const activateEditMode = () => {
-        const isChanged = !editMode;
-        setEditMode(isChanged)
+        setEditMode(true);
+        setTitle(props.value);
+    }
+    const activateViewMode = () => {
+        setEditMode(false);
+        props.onChange(title);
+    }
+    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
     }
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setCurrTitle(e.currentTarget.value)
-        saveText(e.currentTarget.value)
-    }
     return editMode
-        ? (isH3Title ? <h3 onDoubleClick={activateEditMode}>{currTitle}</h3> :
-            <span onDoubleClick={activateEditMode}>{currTitle}</span>)
-        : <input value={currTitle} onBlur={activateEditMode} onChange={onChangeHandler} autoFocus/>
-};
+        ? <input value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode}/>
+        : <span onDoubleClick={activateEditMode}>{props.value}</span>
+}

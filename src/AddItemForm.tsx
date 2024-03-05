@@ -1,49 +1,42 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 
-type AddItemFormType = {
+type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
-const AddItemForm = ({
-                         addItem,
-                     }: AddItemFormType) => {
+export function AddItemForm(props: AddItemFormPropsType) {
 
-    const [title, setTitle] = useState('')
-    const [error, setError]
-        = useState<string | null>(null)
+    let [title, setTitle] = useState("")
+    let [error, setError] = useState<string | null>(null)
 
-    const addItemHandler = () => {
-        if (title.trim() !== '') {
-            addItem(title);
-            setTitle('')
+    const addItem = () => {
+        if (title.trim() !== "") {
+            props.addItem(title);
+            setTitle("");
         } else {
-            setError('Title is required')
+            setError("Title is required");
         }
     }
 
-    function onChangeHandler(e: ChangeEvent<HTMLInputElement>) {
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
 
-    function onKeyPressHandler(e: KeyboardEvent<HTMLInputElement>) {
-        setError(null)
-        if (e.key === "Enter") {
-            addItemHandler()
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        setError(null);
+        if (e.charCode === 13) {
+            addItem();
         }
     }
 
-    return (
-        <div>
-            <input value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   onBlur={()=> setError(null)}
-                   className={error ? 'error' : ''}
-            />
-            <button onClick={addItemHandler}>+</button>
-            {error && <div className='error-message'>{error}</div>}
-        </div>
-    );
-};
+    return <div>
+        <input value={title}
+               onChange={onChangeHandler}
+               onKeyPress={onKeyPressHandler}
+               className={error ? "error" : ""}
+        />
+        <button onClick={addItem}>+</button>
 
-export default AddItemForm;
+        {error && <div className="error-message">{error}</div>}
+    </div>
+}
