@@ -92,6 +92,7 @@ function App() {
             ...tasks,
             [newTodoId]: []
         })
+        console.log(' todolists: ', {[newTodoId]: newTodoList, ...todolists});
     }
 
     return (
