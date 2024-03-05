@@ -21,6 +21,7 @@ type PropsType = {
     todolist: TodoListEntryType
     removeTodolist: (todolistId: string) => void
     EditTask: (todolistId: string, taskId: string, title: string) => void
+    changeTodolistTitle: (todoId: string, title: string) => void
 }
 
 export function Todolist(
@@ -34,7 +35,8 @@ export function Todolist(
         changeTaskStatus,
         todolist,
         removeTodolist,
-        EditTask
+        EditTask,
+        changeTodolistTitle
     }: PropsType) {
 
     let tasksForTodolist = tasks;
@@ -50,18 +52,15 @@ export function Todolist(
 
     filterTasks();
 
-    let [currentTitle, setCurrentTitle] = useState("")
-
     //functionality
     const addTaskItemHandler = (title: string) => {
-            if (title.trim() !== "") {
-                addTask(title.trim(), todolistId);
-                setCurrentTitle("");
-            }
+        if (title.trim() !== "") {
+            addTask(title.trim(), todolistId);
+        }
     }
 
-    function saveH3Title(title: string) {
-        setCurrentTitle(title)
+    function changeTodolistTitleHandler(title: string) {
+        changeTodolistTitle(todolistId, title)
     }
 
     //handlers
@@ -73,7 +72,7 @@ export function Todolist(
 
     return <div>
         <div className={s[`todolist__title-block`]}>
-            <EditableSpan saveText={saveH3Title} title={title} isH3Title={true}/>
+            <EditableSpan saveText={changeTodolistTitleHandler} title={title} isH3Title={true}/>
             <button onClick={removeTodoHandler}>X</button>
         </div>
         <AddItemForm addItem={addTaskItemHandler}/>

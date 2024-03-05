@@ -32,12 +32,11 @@ function App() {
     let todolistID1 = v1();
     let todolistID2 = v1();
 
-
     let [todolists, setTodolists] = useState<Array<TodoListEntryType>>([
         {id: todolistID1, title: 'What to learn', filter: fvenum.all},
         {id: todolistID2, title: 'What to buy', filter: fvenum.all},
     ])
-    console.log(' todolists: ', todolists);
+
 //tasks
     let [tasks, setTasks] = useState<TasksType>({
         [todolistID1]: [
@@ -83,7 +82,7 @@ function App() {
         setTodolists(todolists.filter(todo => todo.id !== todolistId))
     }
 
-    function addTodolistItem(title: string) {
+    function addChangeTodolistItem(title: string) {
         const newTodoId = v1()
         let newTodoList: TodoListEntryType = {id: newTodoId, title: title, filter: fvenum.all}
         setTodolists([newTodoList, ...todolists])
@@ -91,12 +90,16 @@ function App() {
             ...tasks,
             [newTodoId]: []
         })
-        console.log(' todolists: ', {[newTodoId]: newTodoList, ...todolists});
+    }
+
+    function changeTodolistTitle(todoId: string, title: string) {
+        console.log(' title: ', title);
+        setTodolists(todolists.map(t => t.id === todoId ? {...t, title: title} : t))
     }
 
     return (
         <div className="App">
-            <AddItemForm addItem={addTodolistItem}/>
+            <AddItemForm addItem={addChangeTodolistItem}/>
             {todolists.map(el => {
                 return (
                     <Todolist
@@ -111,6 +114,7 @@ function App() {
                         todolist={el}
                         removeTodolist={removeTodolist}
                         EditTask={EditTask}
+                        changeTodolistTitle={changeTodolistTitle}
                     />
                 )
             })}
