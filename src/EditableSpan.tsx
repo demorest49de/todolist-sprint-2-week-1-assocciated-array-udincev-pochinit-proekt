@@ -17,7 +17,7 @@ export const EditableSpan = ({
         const isChanged = !editMode;
         setEditMode(isChanged)
     }
-    console.log(' isH3Title: ', isH3Title);
+
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setCurrTitle(e.currentTarget.value)
         saveText(e.currentTarget.value)

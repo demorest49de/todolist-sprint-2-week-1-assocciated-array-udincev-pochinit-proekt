@@ -37,6 +37,7 @@ const AddItemForm = ({
             <input value={title}
                    onChange={onChangeHandler}
                    onKeyPress={onKeyPressHandler}
+                   onBlur={()=> setError(null)}
                    className={error ? 'error' : ''}
             />
             <button onClick={addItemHandler}>+</button>

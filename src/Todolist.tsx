@@ -55,23 +55,29 @@ export function Todolist(
 
     //functionality
     const addItem = (title: string) => {
-        addTask(title, todolistId)
+        debugger
+            if (title.trim() !== "") {
+                addTask(title.trim(), todolistId);
+                setCurrentTitle("");
+            } else {
+                setError("Title is required");
+            }
     }
 
-    function saveTitle(title: string) {
-        // EditTask(todolistId, title, taskId)
+    function saveH3Title(title: string) {
+        setCurrentTitle(title)
     }
 
     //handlers
 
-    const addTaskHandler = () => {
-        if (currentTitle.trim() !== "") {
-            addTask(currentTitle.trim(), todolistId);
-            setCurrentTitle("");
-        } else {
-            setError("Title is required");
-        }
-    }
+    // const addTaskHandler = () => {
+    //     if (currentTitle.trim() !== "") {
+    //         addTask(currentTitle.trim(), todolistId);
+    //         setCurrentTitle("");
+    //     } else {
+    //         setError("Title is required");
+    //     }
+    // }
 
     const onAllClickHandler = () => changeFilter(todolistId, fvenum.all);
     const onActiveClickHandler = () => changeFilter(todolistId, fvenum.active);
@@ -80,7 +86,7 @@ export function Todolist(
 
     return <div>
         <div className={s[`todolist__title-block`]}>
-            <EditableSpan saveText={saveTitle} title={title} isH3Title={true}/>
+            <EditableSpan saveText={saveH3Title} title={title} isH3Title={true}/>
             <button onClick={removeTodoHandler}>X</button>
         </div>
         <AddItemForm addItem={addItem}/>
