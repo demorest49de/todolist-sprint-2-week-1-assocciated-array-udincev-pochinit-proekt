@@ -20,6 +20,7 @@ type PropsType = {
     changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
     todolist: TodoListEntryType
     removeTodolist: (todolistId: string) => void
+    EditTask: (todolistId: string, taskId: string, title: string) => void
 }
 
 export function Todolist(
@@ -32,7 +33,8 @@ export function Todolist(
         addTask,
         changeTaskStatus,
         todolist,
-        removeTodolist
+        removeTodolist,
+        EditTask
     }: PropsType) {
 
     let tasksForTodolist = tasks;
@@ -57,7 +59,7 @@ export function Todolist(
     }
 
     function saveTitle(title: string) {
-        setCurrentTitle(title)
+        // EditTask(todolistId, title, taskId)
     }
 
     //handlers
@@ -78,7 +80,7 @@ export function Todolist(
 
     return <div>
         <div className={s[`todolist__title-block`]}>
-            <h3>{title}</h3>
+            <EditableSpan saveText={saveTitle} title={title} isH3Title={true}/>
             <button onClick={removeTodoHandler}>X</button>
         </div>
         <AddItemForm addItem={addItem}/>
@@ -91,11 +93,15 @@ export function Todolist(
                         changeTaskStatus(todolistId, t.id, e.currentTarget.checked);
                     }
 
+                    function saveTaskText(title: string) {
+                        EditTask(todolistId, t.id, title)
+                    }
+
                     return <li key={t.id} className={t.isDone ? "is-done" : ""}>
                         <input type="checkbox"
                                onChange={onChangeHandler}
                                checked={t.isDone}/>
-                        <EditableSpan saveTitle={saveTitle} taskTitle={t.title}/>
+                        <EditableSpan saveText={saveTaskText} title={t.title}/>
                         <button onClick={onClickHandler}>x</button>
                     </li>
                 })

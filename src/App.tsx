@@ -67,6 +67,11 @@ function App() {
         });
     }
 
+    function EditTask(todolistId: string, taskId: string, title: string) {
+        debugger
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title: title} : t)})
+    }
+
     function changeStatus(todolistId: string, taskId: string, isDone: boolean) {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone: isDone} : t)})
     }
@@ -106,6 +111,7 @@ function App() {
                         changeTaskStatus={changeStatus}
                         todolist={todolists[el.id]}
                         removeTodolist={removeTodolist}
+                        EditTask={EditTask}
                     />
                 )
             })}
