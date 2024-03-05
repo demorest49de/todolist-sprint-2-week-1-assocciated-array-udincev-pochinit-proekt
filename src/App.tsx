@@ -32,8 +32,9 @@ function App() {
     let todolistID1 = v1();
     let todolistID2 = v1();
 
-//todo
+
     let [todolists, setTodolists] = useState<TodolistsType>({
+        //TODO zamenit id na v1()
         [todolistID1]: {id: todolistID1, title: 'What to learn', filter: fvenum.all},
         [todolistID2]: {id: todolistID2, title: 'What to buy', filter: fvenum.all},
     })
