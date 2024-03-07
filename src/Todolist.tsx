@@ -4,6 +4,7 @@ import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
+import s from './Todo.module.css'
 
 export type TaskType = {
     id: string
@@ -70,15 +71,18 @@ export function Todolist(props: PropsType) {
         <div>
             <Button
                 variant={props.filter === 'all' ? 'outlined' : "text"}
-                    onClick={onAllClickHandler}>All
+                className={s.todo__input_all}
+                onClick={onAllClickHandler}>All
             </Button>
             <Button
-                    variant={props.filter === 'active' ? 'outlined' : "text"}
-                    onClick={onActiveClickHandler}>Active
+                variant={props.filter === 'active' ? 'outlined' : "text"}
+                // className={s['todo__input_active']}
+                onClick={onActiveClickHandler}>Active
             </Button>
             <Button
-                    variant={props.filter === 'completed' ? 'outlined' : "text"}
-                    onClick={onCompletedClickHandler}>Completed
+                variant={props.filter === 'completed' ? 'outlined' : "text"}
+                // className={s['todo__input_Completed']}
+                onClick={onCompletedClickHandler}>Completed
             </Button>
         </div>
     </div>

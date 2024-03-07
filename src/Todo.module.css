@@ -1,0 +1,22 @@
+.todo__input_all {
+  color: black;
+  outline: 1px solid chocolate;
+}
+
+.todo__input_all:hover {
+  /*color: yellow;*/
+  outline: 1px solid red;
+  outline-offset: 2px;
+  border: 1px solid #80004f;
+}
+
+/*.todo__input_active:focus {*/
+/*  color: deeppink;*/
+/*}*/
+
+/*.todo__input_completed:focus {*/
+/*  color: hotpink;*/
+/*  outline: none;*/
+/*  border: none;*/
+/*}*/
+
