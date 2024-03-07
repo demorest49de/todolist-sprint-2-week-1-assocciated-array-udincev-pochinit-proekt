@@ -2,7 +2,7 @@ import React, {ChangeEvent} from 'react';
 import {FilterValuesType} from './App';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
-import {Button, IconButton} from "@mui/material";
+import {Button, Checkbox, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import s from './Todo.module.css'
 
@@ -61,7 +61,10 @@ export function Todolist(props: PropsType) {
 
 
                     return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                        <input type="checkbox" onChange={onChangeHandler} checked={t.isDone}/>
+                        <Checkbox
+                            className={`${s.todo__checkbox}`}
+                            onChange={onChangeHandler}
+                            checked={t.isDone}/>
                         <EditableSpan value={t.title} onChange={onTitleChangeHandler}/>
                         <IconButton onClick={onClickHandler}><Delete/></IconButton>
                     </li>
@@ -71,17 +74,17 @@ export function Todolist(props: PropsType) {
         <div>
             <Button
                 variant={props.filter === 'all' ? 'outlined' : "text"}
-                className={s.todo__input_all}
+                className={`${s.todo__button} ${s.todo__button_focus} ${s.todo__button_hover} `}
                 onClick={onAllClickHandler}>All
             </Button>
             <Button
                 variant={props.filter === 'active' ? 'outlined' : "text"}
-                // className={s['todo__input_active']}
+                className={`${s.todo__button_focus} ${s.todo__button_hover} `}
                 onClick={onActiveClickHandler}>Active
             </Button>
             <Button
                 variant={props.filter === 'completed' ? 'outlined' : "text"}
-                // className={s['todo__input_Completed']}
+                className={`${s.todo__button_focus} ${s.todo__button_hover} `}
                 onClick={onCompletedClickHandler}>Completed
             </Button>
         </div>
