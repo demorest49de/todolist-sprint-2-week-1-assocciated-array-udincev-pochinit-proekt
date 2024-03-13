@@ -9,14 +9,14 @@ type PropsType = {
     title: string
     todolistId: string
     tasks: TaskType[]
-    removeTask: (taskId: string, todolistId: string) => void
-    changeFilter: (filter: FilterValuesType, todolistId: string) => void
+    removeTask: (taskId: string) => void
+    changeFilter: (filter: FilterValuesType) => void
     anonymousAddTask: (title: string) => void
-    changeTaskStatus: (taskId: string, taskStatus: boolean, todolistId: string) => void
+    changeTaskStatus: (taskId: string, taskStatus: boolean) => void
     filter: FilterValuesType
-    removeTodolist: (todolistId: string) => void
-    UpdateTitleTask: (todolistId: string, taskId: string, title: string) => void
-    UpdateTitleTodolist: (todolistId: string, title: string) => void
+    removeTodolist: () => void
+    UpdateTitleTask: (taskId: string, title: string) => void
+    UpdateTitleTodolist: (title: string) => void
 }
 
 export const Todolist = (props: PropsType) => {
@@ -39,15 +39,15 @@ export const Todolist = (props: PropsType) => {
     }
 
     const changeFilterTasksHandler = (filter: FilterValuesType) => {
-        changeFilter(filter, props.todolistId)
+        changeFilter(filter)
     }
 
     const removeTodolistHandler = () => {
-        removeTodolist(todolistId)
+        removeTodolist()
     }
 
     function updateTitleTodolistHandler(title: string) {
-        UpdateTitleTodolist(todolistId, title)
+        UpdateTitleTodolist(title)
     }
 
     return (
@@ -66,16 +66,16 @@ export const Todolist = (props: PropsType) => {
                         {tasks.map((task) => {
 
                             const removeTaskHandler = () => {
-                                removeTask(task.id, todolistId)
+                                removeTask(task.id)
                             }
 
                             const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
                                 const newStatusValue = e.currentTarget.checked
-                                changeTaskStatus(task.id, newStatusValue, todolistId)
+                                changeTaskStatus(task.id, newStatusValue)
                             }
 
                             function updateTaskHandler(newTitle: string) {
-                                UpdateTitleTask(todolistId, task.id, newTitle)
+                                UpdateTitleTask(task.id, newTitle)
                             }
 
                             return <li key={task.id} className={task.isDone ? 'is-done' : ''}>

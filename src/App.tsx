@@ -50,7 +50,6 @@ function App() {
     const removeTask = (taskId: string, todolistId: string) => {
         const newTodolistTasks = {...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)}
         setTasks(newTodolistTasks)
-
     }
 
     const addTask = (title: string, todolistId: string) => {
@@ -128,19 +127,24 @@ function App() {
                     ))
                 }
 
+                function UpdateTitleTaskHandler(taskId: string, title: string) {
+                    UpdateTitleTask(tl.id, taskId, title)
+                }
+
                 return <Todolist
                     key={tl.id}
                     todolistId={tl.id}
                     title={tl.title}
                     tasks={tasksForTodolist}
-                    removeTask={removeTask}
-                    changeFilter={changeFilter}
+                    removeTask={(taskId) => removeTask(taskId, tl.id)}
+                    changeFilter={(filter) => changeFilter(filter, tl.id)}
                     anonymousAddTask={(title) => addTask(title, tl.id)}
-                    changeTaskStatus={changeTaskStatus}
+                    changeTaskStatus={(taskId, taskStatus) =>
+                        changeTaskStatus(taskId, taskStatus, tl.id)}
                     filter={tl.filter}
-                    removeTodolist={removeTodolist}
-                    UpdateTitleTask={UpdateTitleTask}
-                    UpdateTitleTodolist={UpdateTitleTodolist}
+                    removeTodolist={() => removeTodolist(tl.id)}
+                    UpdateTitleTask={UpdateTitleTaskHandler}
+                    UpdateTitleTodolist={(title) => UpdateTitleTodolist(title, tl.id)}
                 />
             })}
         </div>
