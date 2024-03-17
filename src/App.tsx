@@ -75,6 +75,7 @@ function App() {
             [todolistId]: tasks[todolistId].map(t => t.id == taskId ? {...t, isDone: taskStatus} : t)
         }
         setTasks(newTodolistTasks)
+        console.log('111');
     }
 
     const changeFilter = (filter: FilterValuesType, todolistId: string) => {
