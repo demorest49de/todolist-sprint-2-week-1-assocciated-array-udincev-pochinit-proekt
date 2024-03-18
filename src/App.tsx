@@ -30,13 +30,13 @@ function App() {
 
     let [todolists, setTodolists] = useState<TodolistType[]>([
         {id: todolistID1, title: 'What to learn', filter: 'all'},
-        {id: todolistID2, title: 'What to buy', filter: 'all'},
+        // {id: todolistID2, title: 'What to buy', filter: 'all'},
     ])
 
     let [tasks, setTasks] = useState<TasksStateType>({
         [todolistID1]: [
-            {id: v1(), title: 'HTML&CSS', isDone: true},
-            {id: v1(), title: 'JS', isDone: true},
+            // {id: v1(), title: 'HTML&CSS', isDone: true},
+            {id: v1(), title: 'JS', isDone: false},
             {id: v1(), title: 'ReactJS', isDone: false},
         ],
         [todolistID2]: [
@@ -61,6 +61,7 @@ function App() {
     }
 
     function ChangeTaskTitle(title: string, taskId: string, todolistId: string) {
+        console.log(' title: ', title);
         setTasks({
             ...tasks, [todolistId]: tasks[todolistId].map(t =>
                 t.id === taskId ? {...t, title} : t

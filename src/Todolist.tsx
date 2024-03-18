@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {FilterValuesType, TaskType} from "./App";
 import {ChangeEvent} from "react";
 import {Button} from "./Button";
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan/EditableSpan";
+import {debug} from "node:util";
 
 type PropsType = {
     title: string
@@ -34,6 +35,12 @@ export const Todolist = (props: PropsType) => {
         changeTaskTitle
     } = props
 
+    const [errorSpan, setErrorSpan] = useState<string>('')
+
+    function CheckErrorMessage(errorValue: string, inputValue: string) {
+        setErrorSpan(errorValue)
+    }
+
     const changeFilterTasksHandler = (filter: FilterValuesType) => {
         changeFilter(filter, props.todolistId)
     }
@@ -50,7 +57,10 @@ export const Todolist = (props: PropsType) => {
         <div>
             <div className={"todolist-title-container"}>
                 <h3><EditableSpan title={title}
-                                  changeTitle={ChangeTaskHandler}/></h3>
+
+                                  changeTitle={ChangeTaskHandler}
+                                  CheckErrorMessage={(title, inputValue) => CheckErrorMessage(title, inputValue)}
+                /></h3>
                 <Button title={'x'} onClick={removeTodolistHandler}/>
             </div>
             <div>
@@ -70,12 +80,17 @@ export const Todolist = (props: PropsType) => {
                                 const newStatusValue = e.currentTarget.checked
                                 changeTaskStatus(task.id, newStatusValue, todolistId)
                             }
-
+                            console.log(' task.title: ', task.title);
                             return <li key={task.id} className={task.isDone ? 'is-done' : ''}>
                                 <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>
                                 <EditableSpan title={task.title}
-                                              changeTitle={(title) => changeTaskTitle(title, task.id, todolistId)}/>
+                                              changeTitle={(title) => changeTaskTitle(title, task.id, todolistId)}
+                                              CheckErrorMessage={(errorValue, inputValue) =>
+                                                  CheckErrorMessage(errorValue, inputValue)
+                                              }
+                                />
                                 <Button onClick={removeTaskHandler} title={'x'}/>
+                                {!task.title && <div className={'error-message'}>{errorSpan}</div>}
                             </li>
                         })}
                     </ul>
