@@ -46,3 +46,30 @@ export const todolistReducer = (state: Array<TodolistType>, action: ActionType) 
             throw new Error('I don\'t understand this type')
     }
 }
+
+export const RemoveTodolistAC = (todolistId: string): RemoveTodoType => {
+    return {type: 'REMOVE-TODOLIST', id: todolistId}
+}
+
+export const AddTodolistAC = (title: string): AddTodoType => {
+    return {
+        type: 'ADD-TODOLIST',
+        title: title
+    }
+}
+
+export const ChangeTitleTodolistAC = (id: string, title: string): ChangeTitleTodoType => {
+    return {
+        type: 'CHANGE-TODOLIST-TITLE',
+        id: id,
+        title: title
+    }
+}
+
+export const ChangeFilterTodolistAC = (id: string, filter: FilterValuesType): ChangeFilterTodoType => {
+    return {
+        type: 'CHANGE-TODOLIST-FILTER',
+        id: id,
+        filter: filter
+    }
+}
