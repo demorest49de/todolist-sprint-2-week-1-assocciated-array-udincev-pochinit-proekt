@@ -8,23 +8,37 @@ export type DeleteTaskActionType =
 export type AddTaskActionType =
     ReturnType<typeof addTaskAC>
 
+export type ChangeStatusTaskActionType =
+    ReturnType<typeof ChangeStatusTaskAC>
+
 
 export type ActionsType =
     DeleteTaskActionType
     | AddTaskActionType
+    | ChangeStatusTaskActionType
 
 
-export const tasksReducer = (state: TasksStateType, action: ActionsType): TasksStateType => {
+export const tasksReducer = (state: TasksStateType, action: ActionsType):
+    TasksStateType => {
     switch (action.type) {
         case "REMOVE-TASK":
-            return {...state, [action.todolistId]: state[action.todolistId].filter(t => t.id !== action.taskId)};
+            return {
+                ...state,
+                [action.todolistId]:
+                    state[action.todolistId]
+                        .filter(t => t.id !== action.taskId)
+            };
         case "ADD-TASK":
             return {
                 ...state,
                 [action.todolistId]: [{id: action.id, title: action.title, isDone: false},
                     ...state[action.todolistId]
                 ]
-            }
+            };
+        case "CHANGE-STATUS-TASK":
+            return {
+                ...state
+            };
         default:
             throw new Error("I don't understand this type")
     }
@@ -46,3 +60,13 @@ export const addTaskAC = (title: string, todolistId: string) => {
         id: v1(),
     } as const
 }
+
+export const ChangeStatusTaskAC =
+    (status: boolean, taskid: string, todolistId: string) => {
+        return {
+            type: 'CHANGE-STATUS-TASK',
+            status: status,
+            taskId: taskid,
+            todolistId: todolistId,
+        } as const
+    }
